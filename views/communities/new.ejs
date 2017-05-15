@@ -1,0 +1,56 @@
+<% include ../partials/head %>
+
+  <body>
+      <div class="ui  vertical masthead center aligned segment">
+        <div class="ui container">
+          <div class="ui large secondary pointing menu">
+
+            <a class="active item">Home</a>
+
+            <div class="right item">
+              <a class="ui button" href="/logout">Log out</a>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ui vertical stripe segment">
+        <div class="ui text container">
+          <h2 class="ui header">Add a slack community</h2>
+          <form class="ui form">
+            <div class="field">
+              <label>Your slack community</label>
+              <div class="ui huge right labeled input">
+                <input type="text" placeholder="community">
+                <div class="ui label">
+                  .slack.com
+                </div>
+              </div>
+            </div>
+            <p>
+              Your team id is what you use to access your login page on Slack (eg: https://**{this}**.slack.com).
+            </p>
+            <div class="field">
+              <label>API keys, you can get them here</label>
+              <div class="ui huge input corner labeled">
+
+                <input type="text" placeholder="api key">
+                <div class="ui corner label">
+                    <i class="asterisk icon"></i>
+                  </div>
+                </div>
+
+
+              <p>
+                You can find or generate your API test token at <a href='https://api.slack.com/web'>api.slack.com/web</a> – note that the user you use to generate the token must be an admin. You need to create a dedicated `@slack-inviter` user (or similar), mark that user an admin, and use a test token from that dedicated admin user. Note that test tokens have actual permissions so you do not need to create an OAuth 2 app.
+              </p>
+            </div>
+
+            <button class="ui button" type="submit">Create</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

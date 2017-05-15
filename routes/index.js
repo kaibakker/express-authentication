@@ -14,7 +14,15 @@ router.get('/signup', function(req, res) {
   res.render('signup.ejs', { message: req.flash('signupMessage') });
 });
 
-router.get('/profile', isLoggedIn, function(req, res) {
+router.get('/communities', isLoggedIn, function(req, res) {
+  res.render('communities/index.ejs', { user: req.user });
+});
+
+router.get('/communities/new', isLoggedIn, function(req, res) {
+  res.render('communities/new.ejs', { user: req.user });
+});
+
+router.get('/communities/:slack_domain', isLoggedIn, function(req, res) {
   res.render('profile.ejs', { user: req.user });
 });
 
@@ -24,13 +32,13 @@ router.get('/logout', function(req, res) {
 });
 
 router.post('/signup', passport.authenticate('local-signup', {
-  successRedirect: '/profile',
+  successRedirect: '/communities',
   failureRedirect: '/signup',
   failureFlash: true,
 }));
 
 router.post('/login', passport.authenticate('local-login', {
-  successRedirect: '/profile',
+  successRedirect: '/communities',
   failureRedirect: '/login',
   failureFlash: true,
 }));
