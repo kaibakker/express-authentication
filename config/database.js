@@ -1,3 +1,3 @@
 module.exports = {
-  url: 'mongodb://localhost/expressauth',
+  url: process.env.MONGODB_URI || 'mongodb://localhost/expressauth',
 };
