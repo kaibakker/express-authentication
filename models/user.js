@@ -7,6 +7,11 @@ var userSchema = mongoose.Schema({
     email: String,
     password: String,
   },
+  community: {
+		slack_interval: Number,
+		slack_subdomain: String,
+		slack_api_token: String,
+	}
   // facebook: {
   //   id: String,
   //   token: String,
@@ -27,6 +32,15 @@ var userSchema = mongoose.Schema({
   //   name: String,
   // },
 });
+
+
+userSchema.statics.allCommunities = function(done) {
+	this.find({}, function(err, users){
+		var communities = users.map((user) => user.community)
+
+		return done(err, communities)
+	});
+};
 
 userSchema.methods.generateHash = function(password) {
   return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
