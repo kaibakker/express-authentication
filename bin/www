@@ -4,8 +4,8 @@
  * Module dependencies.
  */
 
-var app = require('../app');
-// var server = require('../server');
+// var app = require('../app');
+var server = require('../server');
 var debug = require('debug')('express-authentication:server');
 var http = require('http');
 
