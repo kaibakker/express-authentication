@@ -2,7 +2,7 @@ var slackin = require('slackin').default
 
 var vhost = require('vhost')
 
-var app = require('./app');
+// var app = require('./app');
 
 var User = require('./models/user');
 var Community = require('./models/community');
