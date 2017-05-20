@@ -13,7 +13,6 @@ var domain = process.env.DOMAIN || 'localhost'
 
 var app = express()
 
-app.listen(process.env.PORT || 3004)
 
 var launcher = express()
 
@@ -52,3 +51,5 @@ launcher.get('/communities/:slack_subdomain/startup', function (req, res) {
 
 
 app.use(vhost('launcher.' + domain, launcher))
+
+app.listen(process.env.PORT || 3004)
