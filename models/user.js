@@ -7,35 +7,7 @@ var userSchema = mongoose.Schema({
     email: String,
     password: String,
   },
-  communities: [{
-    active: { type: Boolean, default: true },
-		slack_interval: Number,
-		slack_subdomain: String,
-		slack_api_token: String,
-	}]
-
-
-
-
-  // facebook: {
-  //   id: String,
-  //   token: String,
-  //   email: String,
-  //   name: String,
-  //   username: String,
-  // },
-  // twitter: {
-  //   id: String,
-  //   token: String,
-  //   displayName: String,
-  //   username: String,
-  // },
-  // google: {
-  //   id: String,
-  //   token: String,
-  //   email: String,
-  //   name: String,
-  // },
+  communities : [{ type: mongoose.Schema.Types.ObjectId, ref: 'Community' }]
 });
 
 

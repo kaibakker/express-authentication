@@ -3,6 +3,7 @@ var passport = require('passport');
 var router = express.Router();
 
 var User = require('../models/user');
+var Community = require('../models/community');
 
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
@@ -17,7 +18,15 @@ router.get('/signup', function(req, res) {
 });
 
 router.get('/communities', isLoggedIn, function(req, res) {
-  res.render('communities/index.ejs', { user: req.user });
+  User
+  .findOne({_id: req.user._id }) // all
+  .populate('communities')
+  .exec(function (err, user) {
+    if (err) return handleError(err);
+    res.render('communities/index.ejs', { user: user });
+
+    // Stores with items
+  });
 });
 
 router.get('/communities/new', isLoggedIn, function(req, res) {
@@ -25,21 +34,30 @@ router.get('/communities/new', isLoggedIn, function(req, res) {
 });
 
 router.get('/communities/:slack_domain', isLoggedIn, function(req, res) {
-  res.render('communities/show.ejs', { user: req.user });
+  Community.findOne({slack_domain: req.body.slack_domain}, function(err, community) {
+    res.render('communities/show.ejs', { user: req.user, community: community });
+  })
 });
 
 router.post('/communities', isLoggedIn, function(req, res) {
-  req.user.communities.push
-  console.log(req.body)
-  User.findByIdAndUpdate(
-        req.user._id,
-        {$push: {"communities": req.body}},
-        {safe: true, upsert: true, new : true},
-        function(err, model) {
-            console.log(err);
-            console.log(model)
-        }
-    );
+  var community = new Community(req.body)
+
+  community.save(function(err) {
+    var user = req.user
+    user.communities.push(community)
+    user.save(console.log)
+  })
+  //
+  // console.log(req.body)
+  // User.findByIdAndUpdate(
+  //       req.user._id,
+  //       {$push: {"communities": req.body}},
+  //       {safe: true, upsert: true, new : true},
+  //       function(err, model) {
+  //           console.log(err);
+  //           console.log(model)
+  //       }
+  //   );
   res.redirect('/communities');
 });
 
