@@ -4,6 +4,11 @@ var vhost = require('vhost')
 
 // var app = require('./app');
 
+var mongoose = require('mongoose');
+
+var configDB = require('./config/database.js');
+mongoose.connect(configDB.url);
+
 var User = require('./models/user');
 var Community = require('./models/community');
 
