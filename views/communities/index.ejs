@@ -21,12 +21,15 @@
         <div class="ui text container">
           <h2 class="ui header">Your slack communities</h2>
           <div class="ui middle aligned selection list">
-            <div class="item">
-              <img class="ui avatar image" src="/images/avatar/small/helen.jpg">
-              <div class="content">
-                <div class="header">Helen</div>
-              </div>
-            </div>
+            <% for(var i=0; i<user.communities.length; i++) { %>
+              <a class="item" href=<%= "/communities/" + user.communities[i].slack_subdomain %>>
+                <img class="ui avatar image" src="/images/avatar/small/helen.jpg">
+                <div class="content">
+                  <div class="header"><%= user.communities[i].slack_subdomain %></div>
+                  <div ><%= user.communities[i].slack_api_token %></div>
+                </div>
+              </a>
+            <% } %>
             <div class="item">
               <img class="ui avatar image" src="/images/avatar/small/christian.jpg">
               <div class="content">

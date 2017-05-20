@@ -1,5 +1,3 @@
-var subdomain = require('express-subdomain');
-
 var slackin = require('slackin').default
 
 var vhost = require('vhost')
@@ -10,29 +8,35 @@ var User = require('./models/user');
 
 var express = require('express');
 
-var binder = express()
-
 var domain = process.env.DOMAIN || 'localhost'
 
-User.allCommunities(function(err, res) {
-  res.forEach(function(community) {
-    if(community.slack_subdomain && community.slack_api_token) {
+var app = express()
 
+app.listen(3004)
+
+
+
+var launcher = express()
+
+// respond with "hello world" when a GET request is made to the homepage
+launcher.get('/communities/:community/startup', function (req, res) {
+  User.allCommunities(function(err, res) {
+    res.forEach(startup)
+  })
+
+  var startup = function(community) {
+    if(community.active == true && community.slack_subdomain && community.slack_api_token) {
       var flags = {
         org: community.slack_subdomain,
         token: community.slack_api_token,
         interval: 100000,
       }
-      var slackin = slackin(flags)
+      var microservice = slackin(flags)
 
-
-
-      binder.use(vhost(community.slack_subdomain + '.' + domain, slackin.app))
+      app.use(vhost(community.slack_subdomain + '.' + domain, microservice.app))
     }
-
-  })
+  }
+  res.send("ok")
 })
 
-binder.use(vhost('login.' + domain, app))
-
-module.exports = binder;
+app.use(vhost('launcher.' + domain, launcher))

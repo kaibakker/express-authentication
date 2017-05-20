@@ -18,11 +18,12 @@
       <div class="ui vertical stripe segment">
         <div class="ui text container">
           <h2 class="ui header">Add a slack community</h2>
-          <form class="ui form">
+          <form class="ui form" action="/communities" method="post">
             <div class="field">
               <label>Your slack community</label>
+
               <div class="ui huge right labeled input">
-                <input type="text" placeholder="community">
+                <input type="text" placeholder="community" name="slack_subdomain">
                 <div class="ui label">
                   .slack.com
                 </div>
@@ -35,7 +36,7 @@
               <label>API keys, you can get them here</label>
               <div class="ui huge input corner labeled">
 
-                <input type="text" placeholder="api key">
+                <input type="text" placeholder="api key" name="slack_api_token">
                 <div class="ui corner label">
                     <i class="asterisk icon"></i>
                   </div>

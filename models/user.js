@@ -7,11 +7,16 @@ var userSchema = mongoose.Schema({
     email: String,
     password: String,
   },
-  community: {
+  communities: [{
+    active: { type: Boolean, default: true },
 		slack_interval: Number,
 		slack_subdomain: String,
 		slack_api_token: String,
-	}
+	}]
+
+
+
+
   // facebook: {
   //   id: String,
   //   token: String,
@@ -36,7 +41,12 @@ var userSchema = mongoose.Schema({
 
 userSchema.statics.allCommunities = function(done) {
 	this.find({}, function(err, users){
-		var communities = users.map((user) => user.community)
+		var communities = users.map((user) => user.communities).reduce(
+      function(a, b) {
+        return a.concat(b);
+      },
+      []
+    );
 
 		return done(err, communities)
 	});

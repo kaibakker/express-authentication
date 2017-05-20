@@ -2,6 +2,8 @@ var express = require('express');
 var passport = require('passport');
 var router = express.Router();
 
+var User = require('../models/user');
+
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
@@ -23,7 +25,22 @@ router.get('/communities/new', isLoggedIn, function(req, res) {
 });
 
 router.get('/communities/:slack_domain', isLoggedIn, function(req, res) {
-  res.render('profile.ejs', { user: req.user });
+  res.render('communities/show.ejs', { user: req.user });
+});
+
+router.post('/communities', isLoggedIn, function(req, res) {
+  req.user.communities.push
+  console.log(req.body)
+  User.findByIdAndUpdate(
+        req.user._id,
+        {$push: {"communities": req.body}},
+        {safe: true, upsert: true, new : true},
+        function(err, model) {
+            console.log(err);
+            console.log(model)
+        }
+    );
+  res.redirect('/communities');
 });
 
 router.get('/logout', function(req, res) {

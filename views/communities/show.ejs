@@ -1,0 +1,26 @@
+<% include ../partials/head %>
+
+  <body>
+      <div class="ui  vertical masthead center aligned segment">
+        <div class="ui container">
+          <div class="ui large secondary pointing menu">
+
+            <a class="active item" href="/">Home</a>
+            <a class="active item" href="/communities">Communities</a>
+
+            <div class="right item">
+              <a class="ui button" href="/logout">Log out</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ui vertical stripe segment">
+        <div class="ui text container">
+          <h2 class="ui header">Add a slack community</h2>
+
+          <a href="http://<%= user.communities[0].slack_subdomain + ".localhost:3004" %>">Go to the <%= user.communities[0].slack_subdomain %>'s EnterSlack page</a>
+        </div>
+      </div>
+  </body>
+</html>
