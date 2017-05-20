@@ -2,6 +2,8 @@ var express = require('express');
 var passport = require('passport');
 var router = express.Router();
 
+var request = require('request')
+
 var User = require('../models/user');
 var Community = require('../models/community');
 
@@ -45,7 +47,15 @@ router.post('/communities', isLoggedIn, function(req, res) {
   community.save(function(err) {
     var user = req.user
     user.communities.push(community)
-    user.save(console.log)
+    user.save(function(err) {
+      if(!err) {
+        request('http://launcher.enterslack.com/communities/' + community.slack_subdomain + '/statup', function (error, response, body) {
+          console.log('error:', error); // Print the error if one occurred
+          console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+          console.log('body:', body); // Print the HTML for the Google homepage.
+        });
+      }
+    })
   })
   //
   // console.log(req.body)
