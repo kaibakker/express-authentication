@@ -18,12 +18,12 @@
       <div class="ui vertical stripe segment">
         <div class="ui text container">
           <h2 class="ui header">Add a slack community</h2>
-          <form class="ui form" action="/communities" method="post">
+          <form class="ui form" action="/communities/<%= community.slack_subdomain %>" method="post">
             <div class="field">
               <label>Your slack community</label>
 
               <div class="ui huge right labeled input">
-                <input type="text" placeholder="community" name="slack_subdomain">
+                <input type="text" placeholder="community" name="slack_subdomain" value="<%= community.slack_subdomain %>">
                 <div class="ui label">
                   .slack.com
                 </div>
@@ -36,17 +36,31 @@
               <label>API token</label>
               <div class="ui huge input corner labeled">
 
-                <input type="text" placeholder="api key" name="slack_api_token">
+                <input type="text" placeholder="api key" name="slack_api_token" value="<%= community.slack_api_token %>">
                 <div class="ui corner label">
                   <i class="asterisk icon"></i>
                 </div>
               </div>
               <p>
                 You can find or generate your API token at <a href='https://api.slack.com/custom-integrations/legacy-tokens'>api.slack.com</a> – note that the user you use to generate the token must be an admin. If you need any help go to <a href="http://enterslack.enterslack.com">enterslack's slack</a>.
-                             </p>
+              </p>
+            </div>
+            <div class="field">
+              <label>Settings</label>
+
+              <div class="ui checkbox">
+                <input type="checkbox" name="active" <%= community.active ? 'checked' : ''  %>>
+                <label>ixly.enterslack.com should be active</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui checkbox">
+                <input type="checkbox" name="published" <%= community.published ? 'checked' : ''  %>>
+                <label>Your slack should be published in enterslack.com/communities</label>
+              </div>
             </div>
 
-            <button class="ui button" type="submit">Create</button>
+            <button class="ui button" type="submit">Save</button>
           </form>
         </div>
       </div>

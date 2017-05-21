@@ -31,15 +31,17 @@ router.get('/communities', isLoggedIn, function(req, res) {
   });
 });
 
-router.get('/communities/new', isLoggedIn, function(req, res) {
-  res.render('communities/new.ejs', { user: req.user });
-});
 
 router.get('/communities/:slack_domain', isLoggedIn, function(req, res) {
   Community.findOne({slack_domain: req.body.slack_domain}, function(err, community) {
     res.render('communities/show.ejs', { user: req.user, community: community });
   })
 });
+
+router.get('/communities/new', isLoggedIn, function(req, res) {
+  res.render('communities/new.ejs', { user: req.user });
+});
+
 
 router.post('/communities', isLoggedIn, function(req, res) {
   var community = new Community(req.body)
@@ -57,17 +59,25 @@ router.post('/communities', isLoggedIn, function(req, res) {
       }
     })
   })
-  //
-  // console.log(req.body)
-  // User.findByIdAndUpdate(
-  //       req.user._id,
-  //       {$push: {"communities": req.body}},
-  //       {safe: true, upsert: true, new : true},
-  //       function(err, model) {
-  //           console.log(err);
-  //           console.log(model)
-  //       }
-  //   );
+  res.redirect('/communities');
+});
+
+
+router.get('/communities/:slack_domain/edit', isLoggedIn, function(req, res) {
+  Community.findOne({slack_domain: req.body.slack_domain}, function(err, community) {
+    //TODO: add some check if this slack is owned by the current user
+    res.render('communities/edit.ejs', { user: req.user, community: community });
+  })
+});
+
+router.post('/communities/:slack_domain', isLoggedIn, function(req, res) {
+  var community = new Community(req.body)
+
+  //TODO: add some check if the mutation is allowed
+  var piet = Object.assign(req.body, { published: (req.body.published == 'on'), active: (req.body.active == 'on')})
+
+  Community.findOneAndUpdate({ slack_subdomain: req.params.slack_domain }, piet, {}, console.log)
+
   res.redirect('/communities');
 });
 

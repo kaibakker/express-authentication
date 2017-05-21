@@ -23,6 +23,8 @@
               <a class="item" href=<%= "/communities/" + user.communities[i].slack_subdomain %>>
                 <div class="content">
                   <div class="header"><%= user.communities[i].slack_subdomain %></div>
+                  <%= user.communities[i].active ? ' active ' : 'inactive' %>
+                  <%= user.communities[i].published ? ' published ' : 'unpublished' %>
                 </div>
               </a>
             <% } %>

@@ -1,8 +1,15 @@
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
   color: #00B7FF;
+}
+
+h1 .icon {
+  font-size: 1.7em;
+}
+
+.margin-less {
+  margin-top: 0
 }
