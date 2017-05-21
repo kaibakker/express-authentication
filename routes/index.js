@@ -32,12 +32,6 @@ router.get('/communities', isLoggedIn, function(req, res) {
 });
 
 
-router.get('/communities/:slack_domain', isLoggedIn, function(req, res) {
-  Community.findOne({slack_domain: req.body.slack_domain}, function(err, community) {
-    res.render('communities/show.ejs', { user: req.user, community: community });
-  })
-});
-
 router.get('/communities/new', isLoggedIn, function(req, res) {
   res.render('communities/new.ejs', { user: req.user });
 });
@@ -80,6 +74,14 @@ router.post('/communities/:slack_domain', isLoggedIn, function(req, res) {
 
   res.redirect('/communities');
 });
+
+
+router.get('/communities/:slack_domain', isLoggedIn, function(req, res) {
+  Community.findOne({slack_domain: req.body.slack_domain}, function(err, community) {
+    res.render('communities/show.ejs', { user: req.user, community: community });
+  })
+});
+
 
 router.get('/logout', function(req, res) {
   req.logout();
