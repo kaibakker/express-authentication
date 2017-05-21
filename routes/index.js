@@ -57,27 +57,27 @@ router.post('/communities', isLoggedIn, function(req, res) {
 });
 
 
-router.get('/communities/:slack_domain/edit', isLoggedIn, function(req, res) {
-  Community.findOne({slack_domain: req.body.slack_domain}, function(err, community) {
+router.get('/communities/:slack_subdomain/edit', isLoggedIn, function(req, res) {
+  Community.findOne({slack_subdomain: req.params.slack_subdomain}, function(err, community) {
     //TODO: add some check if this slack is owned by the current user
     res.render('communities/edit.ejs', { user: req.user, community: community });
   })
 });
 
-router.post('/communities/:slack_domain', isLoggedIn, function(req, res) {
+router.post('/communities/:slack_subdomain', isLoggedIn, function(req, res) {
   var community = new Community(req.body)
 
   //TODO: add some check if the mutation is allowed
   var piet = Object.assign(req.body, { published: (req.body.published == 'on'), active: (req.body.active == 'on')})
 
-  Community.findOneAndUpdate({ slack_subdomain: req.params.slack_domain }, piet, {}, console.log)
+  Community.findOneAndUpdate({ slack_subdomain: req.params.slack_subdomain }, piet, {}, console.log)
 
   res.redirect('/communities');
 });
 
 
-router.get('/communities/:slack_domain', isLoggedIn, function(req, res) {
-  Community.findOne({slack_domain: req.body.slack_domain}, function(err, community) {
+router.get('/communities/:slack_subdomain', isLoggedIn, function(req, res) {
+  Community.findOne({slack_subdomain: req.params.slack_subdomain}, function(err, community) {
     res.render('communities/show.ejs', { user: req.user, community: community });
   })
 });
