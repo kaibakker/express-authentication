@@ -29,9 +29,13 @@ var startup = function(community) {
       token: community.slack_api_token,
       interval: 100000,
     }
-    var microservice = slackin(flags)
 
-    app.use(vhost(community.slack_subdomain + '.' + domain, microservice.app))
+    try {
+       var microservice = slackin(flags)
+       app.use(vhost(community.slack_subdomain + '.' + domain, microservice.app))
+    } catch (e) {
+       console.log(e.message, e.name); // pass exception object to err handler
+    }
   }
 }
 // respond with "hello world" when a GET request is made to the homepage
