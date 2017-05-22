@@ -35,12 +35,8 @@ var startup = function(community) {
   }
 }
 // respond with "hello world" when a GET request is made to the homepage
-launcher.get('/communities/startup', function (req, res) {
-  Community.find({}, function(err, communities) {
-    communities.forEach(startup)
-  })
-
-  res.send("ok")
+Community.find({}, function(err, communities) {
+  communities.forEach(startup)
 })
 
 launcher.get('/communities/:slack_subdomain/startup', function (req, res) {
