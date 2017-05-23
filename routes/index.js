@@ -39,21 +39,34 @@ router.get('/communities/new', isLoggedIn, function(req, res) {
 
 router.post('/communities', isLoggedIn, function(req, res) {
   var community = new Community(req.body)
+  request('https://slack.com/api/team.info?token=' + community.slack_api_token, function (error, response, body) {
+    console.log('error:', error); // Print the error if one occurred
+    console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+    console.log('body:', typeof body); // Print the HTML for the Google homepage.
+    var object = JSON.parse(body)
 
-  community.save(function(err) {
-    var user = req.user
-    user.communities.push(community)
-    user.save(function(err) {
-      if(!err) {
-        request('http://launcher.enterslack.com/communities/' + community.slack_subdomain + '/startup', function (error, response, body) {
-          console.log('error:', error); // Print the error if one occurred
-          console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-          console.log('body:', body); // Print the HTML for the Google homepage.
-        });
-      }
-    })
-  })
-  res.redirect('/communities');
+    if(object.ok) {
+      community.slack_subdomain = object.team.domain
+      console.log(community)
+      community.save(function(err) {
+        var user = req.user
+        user.communities.push(community)
+        user.save(function(err) {
+          if(!err) {
+            request('http://launcher.enterslack.com/communities/' + community.slack_subdomain + '/startup', function (error, response, body) {
+              console.log('error:', error); // Print the error if one occurred
+              console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+              console.log('body:', body); // Print the HTML for the Google homepage.
+            });
+          }
+        })
+      })
+      res.redirect('/communities');
+    } else {
+      res.redirect('back');
+    }
+  });
+
 });
 
 
