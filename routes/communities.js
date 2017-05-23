@@ -82,6 +82,23 @@ router.get('/:slack_subdomain', isLoggedIn, function(req, res) {
   })
 });
 
+
+router.get('/:slack_subdomain/integration', isLoggedIn, function(req, res) {
+  Community.findOne({slack_subdomain: req.params.slack_subdomain}, function(err, community) {
+    var integrations = [{
+      title: 'Link with URL',
+      html: '<a class="ui tiny button" href="http://' + community.slack_subdomain + '.enterslack.com">Join ' + community.slack_subdomain + '\'s slack</a>'
+    },{
+      title: 'SVG Badge',
+      html: '<script async defer src="http://' + community.slack_subdomain + '.enterslack.com/slackin.js"></script>'
+    },{
+      title: 'JS Badge',
+      html: '<a href="http://' + community.slack_subdomain + '.enterslack.com"><img src="http://' + community.slack_subdomain + '.enterslack.com/badge.svg"></a>'
+    }]
+    res.render('communities/integration.ejs', { user: req.user, community: community, integrations: integrations });
+  })
+});
+
 module.exports = router;
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated())

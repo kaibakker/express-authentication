@@ -3,7 +3,11 @@ var passport = require('passport');
 var router = express.Router();
 
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'EnterSlack - take your slack community public' });
+});
+
+router.get('/integration', function(req, res, next) {
+  res.render('integration', { title: 'Integration | Enterslack' });
 });
 
 router.get('/login', function(req, res, next) {
