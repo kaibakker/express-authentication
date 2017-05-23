@@ -1,10 +1,9 @@
 <% include ../partials/head %>
 
   <body>
-    <div class="ui vertical masthead center aligned segment">
-
+    <div class="ui vertical masthead">
       <div class="ui container">
-        <div class="ui large secondary menu">
+        <div class="ui large secondary menu segment">
 
           <a class="header item" href="/">EnterSlack</a>
 
@@ -17,25 +16,23 @@
           </div>
         </div>
       </div>
-
-      <div class="ui text container">
-
-        <h1 class="ui header">
-          Start integration
-        </h1>
-      </div>
     </div>
 
-    <div class="ui stripe theming vertical segment" style="padding: 100px 0">
+    <div class="ui stripe theming vertical segment">
       <div class="ui stackable very relaxed grid container">
-
         <div class="left aligned column">
           <div class="ui grid">
-            <div class="sixteen wide column"><h3>Supported intergrations</h3></div>
+            <div class="sixteen wide column"><h1 class="ui header">
+              Integrate Enterslack
+            </h1>
+            <p>
+              Integration is quick and easy, choose an integration, copy the HTML and paste it into your website.
+            </p>
+          </div>
             <% for(var i=0; i<integrations.length; i++) { %>
-            <div class="four wide column"><%= integrations[i].title %></div>
-            <div class="four wide column"><%- integrations[i].html %></div>
-            <div class="eight wide column"><code><%= integrations[i].html %></code></div>
+              <div class="four wide column"><%= integrations[i].title %></div>
+              <div class="four wide column"><%- integrations[i].html %></div>
+              <div class="eight wide column"><pre><code class="html"><%= integrations[i].html %></code></pre></div>
             <% } %>
           </div>
         </div>
